@@ -193,3 +193,81 @@ file1.close()
 mus_df.to_csv('../test_data/GSE241528_CX_GExp_mice.tsv', index = None, header = True, sep = '\t')
 ```
 This dataset did not have any invalid float values. The only challenge was with the strain names 
+
+Going back to the article written to describe the above experiment, there happened to be an idea on how to separate the expression dataset into four experimental stages. 
+The following shows the Python scripts used to process the dataset, making sure there were no duplicate columns.
+#### The four experimental stages reflected in the Harm dataset include; 
+ * 01 primary dominant stage (pd)
+ * 02 after ripened stage (ar)
+ * 03 six-hour after imbibition stage (im)
+ * 04 radical protrusion stage (rp)
+
+#### Primary dominant stage (pd) 
+```python
+# import pandas
+import pandas as pd
+
+# read the file into a dataframe
+harm_data = pd.read_csv('../test_data/valid_data/Harm_Arabid_data.tsv', sep='\t')
+
+# extract columns based on their unique suffix 
+# we will use list comprehension to achieve this 
+Harm_col_pd = [col for col in harm_data.columns if '_pd' in col]
+
+#save the new dataframe 
+Harm_exp_pd = harm_data[['AraSeqID'] + Harm_col_pd]
+
+# check to see the newly selected columns 
+Harm_exp_pd.columns
+
+# save the dataframe into a tsv file
+Harm_exp_pd.to_csv('../test_data/valid_data/Harm_pd_exp.tsv', index = None, header = True, sep = '\t')
+
+```
+#### after ripened stage (ar)
+```python
+# after ripened stage (ar)
+Harm_col_ar = [col for col in harm_data.columns if '_ar' in col]
+
+# save the new dataframe 
+Harm_exp_ar = harm_data[['AraSeqID'] + Harm_col_ar]
+
+# inspect the new columns 
+Harm_exp_ar.columns 
+
+# save the dataframe into a tsv file
+Harm_exp_ar.to_csv('../test_data/valid_data/Harm_ar_exp.tsv', index = None, header = True, sep = '\t')
+
+```
+#### six-hour after imbibition stage (im)
+```python
+# six-hour after imbibition stage (im)
+Harm_col_im = [col for col in harm_data.columns if '_im' in col]
+
+# save the new dataframe 
+Harm_exp_im = harm_data[['AraSeqID'] + Harm_col_im]
+
+# inspect the new columns 
+Harm_exp_im.columns 
+
+# save the dataframe into a tsv file
+Harm_exp_im.to_csv('../test_data/valid_data/Harm_im_exp.tsv', index = None, header = True, sep = '\t')
+
+```
+#### radical protrusion stage (rp)
+```python
+# radical protrusion stage (rp)
+Harm_col_rp = [col for col in harm_data.columns if '_rp' in col]
+
+# save the new dataframe 
+Harm_exp_rp = harm_data[['AraSeqID'] + Harm_col_rp]
+
+# inspect the new columns 
+Harm_exp_rp.columns 
+
+# save the dataframe into a tsv file
+Harm_exp_rp.to_csv('../test_data/valid_data/Harm_rp_exp.tsv', index = None, header = True, sep = '\t')
+
+```
+
+
